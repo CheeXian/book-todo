@@ -28,7 +28,7 @@ export default function BookCard({ book }) {
 
   }
 
-  const resetTimer = () => {
+  const stopTimer = () => {
     clearInterval(timerInterval);
     setTimerInterval(null);
     //dispatch updateBook with new timespent
@@ -57,7 +57,7 @@ export default function BookCard({ book }) {
   return (
     <>
       <Card border={border} className="my-3">
-        <Card.Header>{!completed && "Not" } Completed </Card.Header>
+        <Card.Header>{!completed && "Not"} Completed </Card.Header>
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{description}</Card.Text>
@@ -71,8 +71,8 @@ export default function BookCard({ book }) {
           <Button size="sm" onClick={pauseTimer} className="ms-2">
             <i className="bi bi-pause-fill"></i>
           </Button>
-          <Button size="sm" onClick={resetTimer} className="ms-2">
-            <i className="bi bi-arrow-clockwise"></i>
+          <Button size="sm" onClick={stopTimer} className="ms-2" variant="warning">
+            <i className="bi bi-stop"></i>
           </Button>
           <Button size="sm" variant="secondary"
             onClick={() => navigate(`/edit/${book.id}`)}
