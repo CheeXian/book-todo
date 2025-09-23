@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { removeBook } from "../features/task/bookSlice";
+import { removeBook, updateBook } from "../features/task/bookSlice";
 
 
 export default function BookCard({ book }) {
-  const { title, description, completed } = book;
+  const { title, description, completed, timeSpent } = book;
   const border = completed ? "success" : "danger";
   const [timer, setTimer] = useState(0);
   const [timerInterval, setTimerInterval] = useState(null);
@@ -25,11 +25,14 @@ export default function BookCard({ book }) {
   const pauseTimer = () => {
     clearInterval(timerInterval);
     setTimerInterval(null);
+
   }
 
   const resetTimer = () => {
     clearInterval(timerInterval);
     setTimerInterval(null);
+    //dispatch updateBook with new timespent
+    dispatch(updateBook({ ...book, timeSpent: (timeSpent || 0) + timer }))
     setTimer(0);
   };
 
@@ -54,11 +57,14 @@ export default function BookCard({ book }) {
   return (
     <>
       <Card border={border} className="my-3">
-        <Card.Header>{!completed && "Not Completed"} </Card.Header>
+        <Card.Header>{!completed && "Not" } Completed </Card.Header>
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{description}</Card.Text>
           <p>Timer: {formatTime(timer)}</p>
+
+          <p>Total Time: {formatTime(book.timeSpent || 0)}</p>
+
           <Button size="sm" onClick={startTimer} >
             <i className="bi bi-play"></i>
           </Button>

@@ -18,7 +18,8 @@ export default function AddBook() {
             id: Date.now(),
             title,
             description,
-            completed
+            completed,
+            timeSpent: 0
         };
         dispatch(addToList(newBook));
         navigate("/");

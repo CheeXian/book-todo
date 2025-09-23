@@ -1,7 +1,7 @@
 
 import { useSelector } from 'react-redux'
 import BookCard from '../components/BookCard';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 
 export default function Home() {
 
@@ -9,10 +9,25 @@ export default function Home() {
 
     return (
         <Container>
-            <h1 className="my-3">Your Books</h1>
-            <Row>
-                <CardGroup books={bookList} />
-            </Row>
+            <h1 className="my-3">All Books</h1>
+            <Tabs defaultActiveKey="all" className="mb-3" >
+                <Tab eventKey="all" title="All">
+                    <Row>
+                        <CardGroup books={bookList} />
+                    </Row>
+                </Tab>
+                <Tab eventKey="completed" title="Completed">
+                    <Row>
+                        <CardGroup books={bookList.filter((book) => book.completed)} />
+                    </Row>
+                </Tab>
+                <Tab eventKey="notCompleted" title="Not Completed">
+                    <Row>
+                        <CardGroup books={bookList.filter((book) => !book.completed)} />
+                    </Row>
+                </Tab>
+            </Tabs>
+
         </Container>
     );
 }
