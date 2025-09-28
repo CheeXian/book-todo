@@ -6,7 +6,7 @@ import { removeBook, updateBook } from "../features/task/bookSlice";
 
 
 export default function BookCard({ book }) {
-  const { title, description, completed, timeSpent } = book;
+  const { title, description, completed, timeSpent, totalPages, currentPage } = book;
   const border = completed ? "success" : "danger";
   const [timer, setTimer] = useState(0);
   const [timerInterval, setTimerInterval] = useState(null);
@@ -31,8 +31,36 @@ export default function BookCard({ book }) {
   const stopTimer = () => {
     clearInterval(timerInterval);
     setTimerInterval(null);
-    //dispatch updateBook with new timespent
-    dispatch(updateBook({ ...book, timeSpent: (timeSpent || 0) + timer }))
+
+    let current = null;
+    while (
+      current === undefined ||
+      current === null ||
+      isNaN(current) ||
+      current <= 0 ||
+      current > totalPages
+    ) {
+      const input = prompt(`What page did you read until ? (1 -${totalPages})`);
+      if (input === null) return; //user cancelled
+      current = parseInt(input, 10);
+      if (
+        current === undefined ||
+        current === null ||
+        isNaN(current) ||
+        current <= 0 ||
+        current > totalPages
+      ) {
+        alert(`Invalid input! Please enter a number between 1 and ${totalPages}.`);
+      }
+    }
+
+
+    //dispatch updateBook with new timespent and currentPage
+    dispatch(updateBook({
+      ...book,
+      timeSpent: (timeSpent || 0) + timer,
+      currentPage: current,
+    }))
     setTimer(0);
   };
 
@@ -64,6 +92,8 @@ export default function BookCard({ book }) {
           <p>Timer: {formatTime(timer)}</p>
 
           <p>Total Time: {formatTime(book.timeSpent || 0)}</p>
+
+          <p> Pages: {currentPage}/{totalPages}</p>
 
           <Button size="sm" onClick={startTimer} >
             <i className="bi bi-play"></i>

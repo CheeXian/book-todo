@@ -28,7 +28,7 @@ export function Layout() {
           <Navbar.Brand href="/">Book Tracker</Navbar.Brand>
           {isAuthenticated ? (
             <>
-              <Nav>
+              <Nav className="me-auto">
                 <Nav.Link href="/add">
                   Add Book
                 </Nav.Link>
@@ -65,6 +65,11 @@ export default function App() {
             <Route element={<AuthGuard />}>
               <Route index element={<Home />} />
               <Route path="add" element={<AddBook />} />
+
+              {/* Button/link → navigates to /edit/:id
+              App.jsx → matches route and renders EditBook
+              EditBook.jsx → uses useParams() to get id and loads the book data */}
+
               <Route path="edit/:id" element={<EditBook />} />
             </Route>
             <Route path="login" element={<Login />} />

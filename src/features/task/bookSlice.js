@@ -28,5 +28,9 @@ const bookSlice = createSlice({
     },
 });
 
+
+// Actions are for dispatching changes.
+// Reducer is for updating the state in the Redux store.
+
 export const { addToList, updateBook, removeBook } = bookSlice.actions;
 export default bookSlice.reducer;

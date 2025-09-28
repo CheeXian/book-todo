@@ -13,20 +13,25 @@ export default function EditBook() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const book = useSelector((state) => state.book.bookList.find((book) => book.id === parseInt(id)));    
+    const book = useSelector((state) => state.book.bookList.find((book) => book.id === parseInt(id)));
 
     const [title, setTitle] = useState(book ? book.title : '');
     const [description, setDescription] = useState(book ? book.description : '');
     const [completed, setCompleted] = useState(book ? book.completed : false);
+    const [totalPages, setTotalPages] = useState(book ? book.totalPages : '');
+    const [currentPage, setCurrentPage] = useState(book ? book.currentPage : '');
 
     function editBook(event) {
         event.preventDefault();
+
         const updatedBook = {
             ...book,
             id: parseInt(id),
             title,
             description,
             completed,
+            totalPages: parseInt(totalPages, 10),
+            currentPage: parseInt(currentPage, 10),
         }
         dispatch(updateBook(updatedBook));
         navigate("/");
@@ -52,6 +57,27 @@ export default function EditBook() {
                         onChange={(e) => setDescription(e.target.value)}
                         as="textarea"
                         rows={3}
+                        required
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="totalPages">
+                    <Form.Label>Total Pages</Form.Label>
+                    <Form.Control
+                        value={totalPages}
+                        onChange={(e) => setTotalPages(e.target.value)}
+                        type="number"
+                        min={1}
+                        required
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="currentPages">
+                    <Form.Label>Current Pages</Form.Label>
+                    <Form.Control
+                        value={currentPage}
+                        onChange={(e) => setCurrentPage(e.target.value)}
+                        type="number"
+                        min={0}
+                        max={totalPages || undefined}
                         required
                     />
                 </Form.Group>
