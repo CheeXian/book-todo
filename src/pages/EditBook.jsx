@@ -71,7 +71,7 @@ export default function EditBook() {
                     />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="currentPages">
-                    <Form.Label>Current Pages</Form.Label>
+                    <Form.Label>Current Page</Form.Label>
                     <Form.Control
                         value={currentPage}
                         onChange={(e) => setCurrentPage(e.target.value)}
