@@ -59,7 +59,7 @@ const AuthGuard = () => {
 export default function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/book-todo/">
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route element={<AuthGuard />}>
