@@ -3,7 +3,7 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { store } from "./store";
 import AddBook from "./pages/AddBook";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import { BrowserRouter, Navigate, Outlet, Route, Routes, useNavigate, } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, NavLink, Outlet, Route, Routes, useNavigate, } from "react-router-dom";
 
 import EditBook from "./pages/EditBook";
 import Home from "./pages/Home";
@@ -25,11 +25,11 @@ export function Layout() {
     <>
       <Navbar bg="light" variant="light">
         <Container>
-          <Navbar.Brand href="/">Book Tracker</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">Book Tracker</Navbar.Brand>
           {isAuthenticated ? (
             <>
               <Nav className="me-auto">
-                <Nav.Link href="/add">
+                <Nav.Link as={NavLink} to="/add">
                   Add Book
                 </Nav.Link>
               </Nav>
@@ -37,7 +37,7 @@ export function Layout() {
             </>
           ) : (
             <Nav>
-              <Nav.Link href="/login">Login</Nav.Link>
+              <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
             </Nav>
           )}
         </Container>
